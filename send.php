@@ -1,4 +1,6 @@
 <?php
+include 'filmResponder.php';
+$message = getQuote($_GET['m']);
         // create curl resource 
         $ch = curl_init(); 
 
@@ -7,7 +9,7 @@
         $post = array(
             /*'access_token'=>'EAAChhM0kKZBoBAIPl5cIZBU9NSZA9xCMLZBFYvWhXu7l7E4vTRaEUDGeB2BhaayVyw8PZAVU87ZAj4uR1zNw60pYRPqjd1nj4pmq0uOufjvc59FlwCULTeK3nzCIj2ZCEyxI76IMtSEnVDc3Gm8i8XMlGZCl48AE5fHqqQZA60TaTogZDZD',*/
             'recipient'=>'{ "id": "1621191277905103" }' ,
-            'message'=>'{ "text": "hello, world!" } '
+            'message'=>'{ "text": "' . $message . '" } '
             );
             $data = '{ "recipient": { "id": "1621191277905103" }, "message": { "text": "hello, world!" } }';
         curl_setopt($ch, CURLOPT_HTTPHEADER, 'Content-Type: application/json');

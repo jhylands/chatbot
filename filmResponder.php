@@ -6,23 +6,30 @@
     return $string;
 }
 
-$myfile = fopen("script.csv", "r") or die("Unable to open file!");
-$raw = fread($myfile,filesize("script.csv"));
-fclose($myfile);
-
-$responces = explode("<br>", strip_punctuation($raw));
-$message = $_GET['m'];
-$ranks =[];
-
-foreach($responces as &$responce){
-    $rank = levenshtein($message,$responce);
-    //echo $rank . $responce . "<br />";
-    $ranks[] = $rank;
-    
+function getScript($file){
+    $myfile = fopen($file, "r") or die("Unable to open file!");
+    $raw = fread($myfile,filesize($file));
+    fclose($myfile);
+    return $raw;
 }
-$min = min($ranks);
-echo $min ."<br />";
-$index =  array_search(min($ranks), $ranks);
-echo $responces[$index] . $index .  "<br/>" ;
-echo $responces[$index+1];
+function getQuote($message){
+    $raw = getScript("liveAndLetDie.txt") . getScript("hotFuzz.txt");
 
+    $responces = explode("<br>", strip_punctuation($raw));
+    //$message = $_GET['m'];
+    $ranks =[];
+
+    foreach($responces as &$responce){
+        $rank = levenshtein($message,$responce);
+        //echo $rank . $responce . "<br />";
+        $ranks[] = $rank;
+
+    }
+    $min = min($ranks);
+    //echo $min ."<br />";
+    $index =  array_search(min($ranks), $ranks);
+    //echo $responces[$index] . $index .  "<br/>" ;
+    return $responces[$index+1];
+    //return explode("<br>", $raw)[$index+1];
+
+}

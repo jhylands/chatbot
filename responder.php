@@ -1,4 +1,5 @@
 <?php
+include 'filmResponder.php';
 //https://stackoverflow.com/questions/36724180/facebook-messenger-api-cant-verify-webhook-url-php
 $challenge = $_REQUEST['hub_challenge'];
   $verify_token = $_REQUEST['hub_verify_token'];
@@ -24,14 +25,8 @@ $sender = $input['entry'][0]['messaging'][0]['sender']['id'];
 
 
  $ch = curl_init($url);
-/*
-$myfile = fopen("script.csv", "r") or die("Unable to open file!");
-$raw = fread($myfile,filesize("script.csv"));
-fclose($myfile);
-$responces = explode("<br>", $row);
-if(in_array($message, $responces)){
-    $message = $responces[array_search($message, $responces)+1];
-}*/
+
+ $message = getQuote($message);
 //Answer to the message adds 1
 if($message)
 {
@@ -40,7 +35,7 @@ if($message)
         "id":"'.$sender.'"
       }, 
     "message":{
-        "text":"'.$message. ' !' .'"
+        "text":"'.$message .'"
       }
  }';
 };
@@ -59,10 +54,3 @@ if($message)
     $result = curl_exec($ch);
  }
  
- 
- function strip_punctuation($string) {
-    $string = strtolower($string);
-    $string = preg_replace("/[:punct:]+/", "", $string);
-    //$string = str_replace(" +", "_", $string);
-    return $string;
-}
