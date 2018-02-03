@@ -1,0 +1,4 @@
+Is the sql database in the correct form 
+
+- Write program to add nodes in english
+- Write program to add langages 
